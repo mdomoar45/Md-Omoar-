@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>নূরী.ai - তোমার সেরা বন্ধু</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuri.ai</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="nuri-container">
-    <h1>স্বাগতম, আমি নূরী</h1>
-    <p>তোমার সেরা বন্ধু ও সহকারী, সবসময় তোমার পাশে আছি।</p>
-    <button onclick="speak()">আমার কণ্ঠ শুনো</button>
+    <div id="nuri-avatar">
+      <img src="nuri.jpg" alt="Nuri">
+    </div>
+    <div id="nuri-chat">
+      <div id="chat-log"></div>
+      <div id="chat-input">
+        <input type="text" id="user-input" placeholder="নুরি-কে কিছু বলো..." />
+        <button onclick="sendMessage()">পাঠাও</button>
+      </div>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
