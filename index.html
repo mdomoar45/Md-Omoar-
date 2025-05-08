@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nuri.ai</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="nuri-container">
+  <div id="loading-screen">লোড হচ্ছে...</div>
+
+  <div id="nuri-container" class="hidden">
     <div id="nuri-avatar">
-      <img src="nuri.jpg" alt="Nuri">
+      <img src="nuri.jpg" alt="Nuri" />
     </div>
     <div id="nuri-chat">
       <div id="chat-log"></div>
       <div id="chat-input">
-        <input type="text" id="user-input" placeholder="নুরি-কে কিছু বলো..." />
+        <input type="text" id="user-input" placeholder="নূরী-কে কিছু বলো..." />
         <button onclick="sendMessage()">পাঠাও</button>
       </div>
     </div>
