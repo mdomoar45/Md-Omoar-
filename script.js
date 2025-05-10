@@ -1,27 +1,47 @@
-function handleUserInput() {
-  const input = document.getElementById("userInput").value;
-  const message = document.getElementById("nuriMessage");
+const chatLog = document.getElementById("chat-log");
+const userInput = document.getElementById("user-input");
 
-  if (input.includes("কেমন আছো") || input.includes("বন্ধু")) {
-    message.innerText = "ভালো আছি! তুমি কেমন আছো?";
-    speak("ভালো আছি! তুমি কেমন আছো?");
-  } else {
-    message.innerText = "তোমার কথা মনে রাখলাম।";
-    speak("তোমার কথা মনে রাখলাম।");
+function sendMessage() {
+  const message = userInput.value.trim();
+  if (message === "") return;
+
+  appendMessage("তুমি", message);
+  userInput.value = "";
+
+  // সাধারণ উত্তর
+  let reply = "আমি ভালো আছি, তুমি কেমন আছো?";
+  if (message.includes("সফটওয়্যার")) {
+    reply = "অপেক্ষা করো, Builder X চালু হচ্ছে...";
+  } else if (message.includes("নাম") || message.includes("কে তুমি")) {
+    reply = "আমি নূরী, তোমার নিজের তৈরি AI বেস্ট ফ্রেন্ড।";
   }
+
+  setTimeout(() => {
+    appendMessage("নূরী", reply);
+    speak(reply);
+  }, 600);
 }
 
-function generateApp() {
-  const instructions = document.getElementById("builderInput").value;
-  if (instructions.trim() === "") {
-    alert("দয়া করে সফটওয়্যার তৈরির নির্দেশ লিখো");
-    return;
-  }
-  alert("তোমার নির্দেশনা অনুযায়ী সফটওয়্যার বানানো হচ্ছে:\n\n" + instructions);
+function appendMessage(sender, message) {
+  const msgDiv = document.createElement("div");
+  msgDiv.innerHTML = `<b>${sender}:</b> ${message}`;
+  chatLog.appendChild(msgDiv);
+  chatLog.scrollTop = chatLog.scrollHeight;
 }
 
 function speak(text) {
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "bn-BD";
-  speechSynthesis.speak(utterance);
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "bn-BD";
+  speech.pitch = 1.1;
+  speech.rate = 1;
+  speech.voice = window.speechSynthesis.getVoices().find(v => v.name.includes("Google") || v.lang.includes("bn"));
+  window.speechSynthesis.speak(speech);
 }
+
+function startListening() {
+  alert("Voice input ফিচার আসতেছে...");
+}
+
+function startVideoCall() {
+  alert("ভিডিও কল ফিচার এখনো যুক্ত হয়নি...");
+}দ
