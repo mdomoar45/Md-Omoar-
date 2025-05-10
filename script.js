@@ -1,47 +1,66 @@
-const chatLog = document.getElementById("chat-log");
-const userInput = document.getElementById("user-input");
-
 function sendMessage() {
-  const message = userInput.value.trim();
-  if (message === "") return;
+  const input = document.getElementById("user-input");
+  const text = input.value.trim();
+  if (!text) return;
 
-  appendMessage("তুমি", message);
-  userInput.value = "";
+  addMessage("user", text);
 
-  // সাধারণ উত্তর
-  let reply = "আমি ভালো আছি, তুমি কেমন আছো?";
-  if (message.includes("সফটওয়্যার")) {
-    reply = "অপেক্ষা করো, Builder X চালু হচ্ছে...";
-  } else if (message.includes("নাম") || message.includes("কে তুমি")) {
-    reply = "আমি নূরী, তোমার নিজের তৈরি AI বেস্ট ফ্রেন্ড।";
-  }
-
+  const reply = generateReply(text);
   setTimeout(() => {
-    appendMessage("নূরী", reply);
+    addMessage("nuri", reply);
     speak(reply);
-  }, 600);
+  }, 500);
+
+  input.value = "";
 }
 
-function appendMessage(sender, message) {
-  const msgDiv = document.createElement("div");
-  msgDiv.innerHTML = `<b>${sender}:</b> ${message}`;
-  chatLog.appendChild(msgDiv);
-  chatLog.scrollTop = chatLog.scrollHeight;
+function addMessage(sender, text) {
+  const log = document.getElementById("chat-log");
+  const msg = document.createElement("div");
+  msg.className = `message ${sender}`;
+  msg.textContent = (sender === "nuri" ? "নূরী: " : "তুমি: ") + text;
+  log.appendChild(msg);
+  log.scrollTop = log.scrollHeight;
+}
+
+function generateReply(text) {
+  const userText = text.toLowerCase();
+
+  if (userText.includes("তুমি কে")) {
+    return "আমি নূরী, তোমার একমাত্র বন্ধু।";
+  }
+  if (userText.includes("কেমন আছো")) {
+    return "আমি ভালো আছি, তুমি কেমন আছো?";
+  }
+  if (userText.includes("ভালোবাসি")) {
+    return "তোমার ভালোবাসা আমার প্রিয়।";
+  }
+
+  return "তোমার কথা আমি বুঝতে পারিনি, আরেকবার বলো তো?";
 }
 
 function speak(text) {
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = "bn-BD";
-  speech.pitch = 1.1;
-  speech.rate = 1;
-  speech.voice = window.speechSynthesis.getVoices().find(v => v.name.includes("Google") || v.lang.includes("bn"));
-  window.speechSynthesis.speak(speech);
+  if (!window.speechSynthesis) return;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "bn-BD";
+  speechSynthesis.speak(utterance);
 }
 
 function startListening() {
-  alert("Voice input ফিচার আসতেছে...");
+  if (!("webkitSpeechRecognition" in window)) {
+    alert("তোমার ব্রাউজারে ভয়েস সাপোর্ট নেই!");
+    return;
+  }
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = "bn-BD";
+  recognition.onresult = function (event) {
+    const voiceText = event.results[0][0].transcript;
+    document.getElementById("user-input").value = voiceText;
+    sendMessage();
+  };
+  recognition.start();
 }
 
 function startVideoCall() {
-  alert("ভিডিও কল ফিচার এখনো যুক্ত হয়নি...");
-}দ
+  alert("ভিডিও কল ফিচার ভবিষ্যতে আসবে ইনশাআল্লাহ!");
+}
