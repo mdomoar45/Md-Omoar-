@@ -3,22 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nuri - Md Omoar 111</title>
+  <title>Md Omoar 111</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="chat-container">
-    <div id="chat-log"></div>
+    <div id="chat-log" class="chat-log"></div>
 
-    <div class="input-area">
-      <input type="text" id="user-input" placeholder="নূরীকে কিছু বলো..." />
+    <div class="chat-input">
+      <input id="user-input" type="text" placeholder="নূরীকে কিছু বলো..." />
       <button onclick="sendMessage()">পাঠাও</button>
-
-      <!-- ছোট সাইড বাটন -->
-      <div class="side-buttons">
-        <button onclick="startListening()" title="ভয়েস পাঠাও">🎤</button>
-        <button onclick="startVideoCall()" title="ভিডিও কল">📹</button>
-      </div>
+      <button onclick="startListening()">🎤</button>
+      <button onclick="startVideoCall()">📹</button>
     </div>
   </div>
 
