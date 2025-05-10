@@ -2,26 +2,22 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nuri.ai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Md Omoar 111</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="loading-screen">লোড হচ্ছে...</div>
-
-  <div id="nuri-container" class="hidden">
-    <div id="nuri-avatar">
-      <img src="nuri.jpg" alt="Nuri" />
-    </div>
-    <div id="nuri-chat">
-      <div id="chat-log"></div>
-      <div id="chat-input">
-        <input type="text" id="user-input" placeholder="নূরী-কে কিছু বলো..." />
-        <button onclick="sendMessage()">পাঠাও</button>
-      </div>
+  <div class="container">
+    <img src="nuri.jpg" alt="নূরী" class="nuri-img" />
+    <div class="nuri-message" id="nuriMessage">হ্যালো! আমি নূরী। কেমন আছো তুমি?</div>
+    <input type="text" id="userInput" placeholder="নূরীকে কিছু বলো..." />
+    <button onclick="handleUserInput()">পাঠাও</button>
+    <div class="builder-x">
+      <h3>Builder X</h3>
+      <textarea id="builderInput" placeholder="এখানে বাংলা ভাষায় তোমার অ্যাপের নির্দেশনা লিখো..."></textarea>
+      <button onclick="generateApp()">সফটওয়্যার বানাও</button>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
