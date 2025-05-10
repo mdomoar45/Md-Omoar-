@@ -2,88 +2,50 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Kalpurush", sans-serif;
-  background-color: #111;
-  color: #fff;
+  background: #111;
+  color: white;
+  text-align: center;
 }
 
-#loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2em;
-}
-
-.hidden {
-  display: none;
-}
-
-#nuri-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-}
-
-#nuri-avatar img {
-  width: 100%;
-  max-height: 50vh;
-  object-fit: cover;
-}
-
-#nuri-chat {
-  flex: 1;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
+.container {
   padding: 10px;
-  box-sizing: border-box;
+  max-width: 400px;
+  margin: auto;
 }
 
-#chat-log {
-  flex: 1;
-  overflow-y: auto;
+.nuri-img {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.nuri-message {
+  font-size: 18px;
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
   margin-bottom: 10px;
 }
 
-.message {
-  margin: 5px 0;
+input, textarea {
+  width: 100%;
   padding: 10px;
-  border-radius: 10px;
-}
-
-.user {
-  background-color: #007bff;
-  align-self: flex-end;
-}
-
-.nuri {
-  background-color: #28a745;
-  align-self: flex-start;
-}
-
-#chat-input {
-  display: flex;
-}
-
-#user-input {
-  flex: 1;
-  padding: 10px;
-  font-size: 1em;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
 }
 
 button {
-  padding: 10px 15px;
-  font-size: 1em;
-  background-color: #ff1493;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #00b894;
   color: white;
   border: none;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 0 5px 5px 0;
+}
+
+.builder-x {
+  margin-top: 30px;
 }
