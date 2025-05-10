@@ -3,21 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Md Omoar 111</title>
+  <title>Nuri - Md Omoar 111</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="nuri.jpg" alt="নূরী" class="nuri-img" />
-    <div class="nuri-message" id="nuriMessage">হ্যালো! আমি নূরী। কেমন আছো তুমি?</div>
-    <input type="text" id="userInput" placeholder="নূরীকে কিছু বলো..." />
-    <button onclick="handleUserInput()">পাঠাও</button>
-    <div class="builder-x">
-      <h3>Builder X</h3>
-      <textarea id="builderInput" placeholder="এখানে বাংলা ভাষায় তোমার অ্যাপের নির্দেশনা লিখো..."></textarea>
-      <button onclick="generateApp()">সফটওয়্যার বানাও</button>
+  <div class="chat-container">
+    <div id="chat-log"></div>
+
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="নূরীকে কিছু বলো..." />
+      <button onclick="sendMessage()">পাঠাও</button>
+
+      <!-- ছোট সাইড বাটন -->
+      <div class="side-buttons">
+        <button onclick="startListening()" title="ভয়েস পাঠাও">🎤</button>
+        <button onclick="startVideoCall()" title="ভিডিও কল">📹</button>
+      </div>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
