@@ -1,36 +1,27 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const loadingScreen = document.getElementById("loading-screen");
-  const chatContainer = document.getElementById("nuri-container");
+function handleUserInput() {
+  const input = document.getElementById("userInput").value;
+  const message = document.getElementById("nuriMessage");
 
-  if (loadingScreen && chatContainer) {
-    loadingScreen.style.display = "none";
-    chatContainer.classList.remove("hidden");
+  if (input.includes("কেমন আছো") || input.includes("বন্ধু")) {
+    message.innerText = "ভালো আছি! তুমি কেমন আছো?";
+    speak("ভালো আছি! তুমি কেমন আছো?");
+  } else {
+    message.innerText = "তোমার কথা মনে রাখলাম।";
+    speak("তোমার কথা মনে রাখলাম।");
   }
-});
-
-function sendMessage() {
-  const input = document.getElementById("user-input");
-  const message = input.value.trim();
-  if (!message) return;
-
-  addMessage("user", message);
-  input.value = "";
-
-  setTimeout(() => {
-    const reply = generateReply(message);
-    addMessage("nuri", reply);
-  }, 1000);
 }
 
-function addMessage(sender, text) {
-  const log = document.getElementById("chat-log");
-  const msg = document.createElement("div");
-  msg.className = "message " + sender;
-  msg.textContent = text;
-  log.appendChild(msg);
-  log.scrollTop = log.scrollHeight;
+function generateApp() {
+  const instructions = document.getElementById("builderInput").value;
+  if (instructions.trim() === "") {
+    alert("দয়া করে সফটওয়্যার তৈরির নির্দেশ লিখো");
+    return;
+  }
+  alert("তোমার নির্দেশনা অনুযায়ী সফটওয়্যার বানানো হচ্ছে:\n\n" + instructions);
 }
 
-function generateReply(userText) {
-  return "আমি এখানে আছি নূরী। কিছু চাইলে বলো, সবসময় তোমার পাশে আছি!";
+function speak(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "bn-BD";
+  speechSynthesis.speak(utterance);
 }
