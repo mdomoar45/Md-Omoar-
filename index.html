@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Md Omoar 111</title>
+  <title>Md Omoar - Nuri AI</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <div id="chat-log" class="chat-log"></div>
-
-    <div class="chat-input">
-      <input id="user-input" type="text" placeholder="নূরীকে কিছু বলো..." />
-      <button onclick="sendMessage()">পাঠাও</button>
-      <button onclick="startListening()">🎤</button>
-      <button onclick="startVideoCall()">📹</button>
+  <div id="nuri-container">
+    <img src="nuri.jpg" alt="Nuri AI" id="nuri-image" />
+    <div id="response-box"></div>
+    <div id="chat-controls">
+      <input type="text" id="user-input" placeholder="নূরীকে কিছু বলো..." />
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="startVoice()">🎤</button>
+      <button onclick="videoCall()">📹</button>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
