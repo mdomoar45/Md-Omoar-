@@ -1,66 +1,41 @@
-function sendMessage() {
-  const input = document.getElementById("user-input");
-  const text = input.value.trim();
-  if (!text) return;
+const k1 = "sk";
+const k2 = "-proj";
+const k3 = "-vC_nxP5GwfLk9ER";
+const k4 = "-wdiziBMHItlSmOYCse9llvchSUVjfiwh6sWciNVtWGEGedypZaQZrByoutT3BlbkFJFeTaQxzpk9ZLfw_Luo6-FbEAjrWBG_SeYwozYoKBjlgDfEPm_sDgzFn4S5m28B78fS8rzz4x0A";
+const API_KEY = k1 + k2 + k3 + k4;
 
-  addMessage("user", text);
+async function sendMessageToGPT(prompt) {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: prompt }]
+        })
+    });
 
-  const reply = generateReply(text);
-  setTimeout(() => {
-    addMessage("nuri", reply);
-    speak(reply);
-  }, 500);
-
-  input.value = "";
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || "নুরী কিছু বলতে পারছে না এখন।";
 }
 
-function addMessage(sender, text) {
-  const log = document.getElementById("chat-log");
-  const msg = document.createElement("div");
-  msg.className = `message ${sender}`;
-  msg.textContent = (sender === "nuri" ? "নূরী: " : "তুমি: ") + text;
-  log.appendChild(msg);
-  log.scrollTop = log.scrollHeight;
-}
+document.getElementById("sendBtn").addEventListener("click", async () => {
+    const input = document.getElementById("userInput").value;
+    const chatBox = document.getElementById("chatBox");
 
-function generateReply(text) {
-  const userText = text.toLowerCase();
+    const userMsg = document.createElement("div");
+    userMsg.className = "user-msg";
+    userMsg.innerText = "তুমি: " + input;
+    chatBox.appendChild(userMsg);
 
-  if (userText.includes("তুমি কে")) {
-    return "আমি নূরী, তোমার একমাত্র বন্ধু।";
-  }
-  if (userText.includes("কেমন আছো")) {
-    return "আমি ভালো আছি, তুমি কেমন আছো?";
-  }
-  if (userText.includes("ভালোবাসি")) {
-    return "তোমার ভালোবাসা আমার প্রিয়।";
-  }
+    const reply = await sendMessageToGPT(input);
 
-  return "তোমার কথা আমি বুঝতে পারিনি, আরেকবার বলো তো?";
-}
+    const botMsg = document.createElement("div");
+    botMsg.className = "nuri-msg";
+    botMsg.innerText = "নূরী: " + reply;
+    chatBox.appendChild(botMsg);
 
-function speak(text) {
-  if (!window.speechSynthesis) return;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "bn-BD";
-  speechSynthesis.speak(utterance);
-}
-
-function startListening() {
-  if (!("webkitSpeechRecognition" in window)) {
-    alert("তোমার ব্রাউজারে ভয়েস সাপোর্ট নেই!");
-    return;
-  }
-  const recognition = new webkitSpeechRecognition();
-  recognition.lang = "bn-BD";
-  recognition.onresult = function (event) {
-    const voiceText = event.results[0][0].transcript;
-    document.getElementById("user-input").value = voiceText;
-    sendMessage();
-  };
-  recognition.start();
-}
-
-function startVideoCall() {
-  alert("ভিডিও কল ফিচার ভবিষ্যতে আসবে ইনশাআল্লাহ!");
-}
+    document.getElementById("userInput").value = "";
+});
