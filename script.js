@@ -15,29 +15,40 @@ async function sendMessage() {
   appendMessage("তুমি", message);
   input.value = "";
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer sk-proj-...তোমার_API_KEY..."
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }]
-    })
-  });
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
 
-  const data = await response.json();
-  const reply = data.choices?.[0]?.message?.content || "কিছু ভুল হয়েছে!";
-  appendMessage("নূরী", reply);
+    if (!response.ok) {
+      appendMessage("নূরী", "রিপ্লাই আসছে না। API বা Server চেক করো!");
+      return;
+    }
+
+    const data = await response.json();
+    const reply = data.reply || "কিছু ভুল হয়েছে!";
+    appendMessage("নূরী", reply);
+  } catch (err) {
+    appendMessage("নূরী", "নেটওয়ার্ক সমস্যা হয়েছে!");
+  }
 }
 
 function startVoice() {
-  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("ভয়েস রিকগনিশন সাপোর্ট করছে না!");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
   recognition.lang = "bn-BD";
+
   recognition.onresult = function (event) {
     input.value = event.results[0][0].transcript;
     sendMessage();
   };
+
   recognition.start();
 }
