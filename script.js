@@ -1,37 +1,43 @@
-const API_KEY = process.env.OPENAI_API_KEY;
+const chatBox = document.getElementById("chatBox");
+const input = document.getElementById("userInput");
 
-async function sendMessageToGPT(prompt) {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: prompt }]
-        })
-    });
-
-    const data = await response.json();
-    return data.choices?.[0]?.message?.content || "দুঃখিত! আমি কিছু বুঝতে পারলাম না।";
+function appendMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.innerHTML = `<b>${sender}:</b> ${text}`;
+  chatBox.appendChild(msg);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-document.getElementById("sendBtn").addEventListener("click", async () => {
-    const input = document.getElementById("user-input").value;
-    const chatBox = document.getElementById("response-box");
+async function sendMessage() {
+  const message = input.value.trim();
+  if (!message) return;
 
-    const userMsg = document.createElement("div");
-    userMsg.className = "user-msg";
-    userMsg.innerText = "তুমি: " + input;
-    chatBox.appendChild(userMsg);
+  appendMessage("তুমি", message);
+  input.value = "";
 
-    const reply = await sendMessageToGPT(input);
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer sk-proj-...তোমার_API_KEY..."
+    },
+    body: JSON.stringify({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: message }]
+    })
+  });
 
-    const botMsg = document.createElement("div");
-    botMsg.className = "nuri-msg";
-    botMsg.innerText = "নূরী: " + reply;
-    chatBox.appendChild(botMsg);
+  const data = await response.json();
+  const reply = data.choices?.[0]?.message?.content || "কিছু ভুল হয়েছে!";
+  appendMessage("নূরী", reply);
+}
 
-    document.getElementById("user-input").value = "";
-});
+function startVoice() {
+  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+  recognition.lang = "bn-BD";
+  recognition.onresult = function (event) {
+    input.value = event.results[0][0].transcript;
+    sendMessage();
+  };
+  recognition.start();
+}
