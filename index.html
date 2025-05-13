@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nuri - Md Omoar</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuri - তোমার সহকারী</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="nuri-container">
-    <img src="nuri.jpg" alt="Nuri" class="nuri-avatar" />
-    <div id="chatbox" class="chatbox"></div>
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="তোমার প্রশ্ন লেখো..." />
-      <button onclick="sendMessage()">পাঠাও</button>
-    </div>
-    <div class="extra-buttons">
-      <button onclick="startVoiceInput()">🎤 ভয়েস</button>
-      <button onclick="videoCall()">📹 ভিডিও</button>
-    </div>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Upload</h2>
+      <input type="file" id="fileUploader" multiple>
+    </aside>
+
+    <main class="chat-area">
+      <div class="nuri-face">
+        <img src="nuri.jpg" alt="Nuri">
+      </div>
+
+      <div id="chatBox"></div>
+
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="তোমার বার্তা লিখো...">
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="startVoice()">🎤</button>
+      </div>
+    </main>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
